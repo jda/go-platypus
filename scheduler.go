@@ -10,6 +10,7 @@ type LastRunMethodParameters struct {
 	Datatype string `xml:"datatype"`
 }
 
+// LastRun gets the most recent time when the Event Scheduler task runner was triggered.
 func (p Platypus) LastRun() (time.Time, error) {
 	lastRun := time.Unix(0, 0)
 

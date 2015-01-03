@@ -11,6 +11,7 @@ type LoginMethodParameters struct {
 	Datatype  string `xml:"datatype"`
 }
 
+// Login checks if staff login credentials are valid
 func (p Platypus) Login(username string, password string) error {
 	params := LoginMethodParameters{
 		Logintype: "Staff",

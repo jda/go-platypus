@@ -20,6 +20,7 @@ type Platypus struct {
 	Debug     bool
 }
 
+// New creates a new connection to the Platypus WOW API
 func New(host string, user string, pass string) (Platypus, error) {
 	p := Platypus{
 		host:      host,
@@ -49,6 +50,7 @@ func (p Platypus) newDataBlock() DataBlock {
 	return db
 }
 
+// Exec calls the WOW API method named in action with a parameter struct.
 func (p Platypus) Exec(action string, params interface{}) (DataBlock, error) {
 	reply := DataBlock{}
 
