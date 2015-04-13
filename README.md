@@ -8,6 +8,6 @@ Go library for interacting with the [Tucows Platypus](http://www.ispbilling.com)
 
 ## Installation
 
-1. go get github.com/jda/go-platypus
-2. import "github.com/jda/go-platypus"
+1. go get go.jona.me/platypus
+2. import "go.jona.me/platypus"
 

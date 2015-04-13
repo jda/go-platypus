@@ -1,4 +1,4 @@
-package platypus
+package platypus // import "go.jona.me/platypus"
 
 import (
 	"errors"
