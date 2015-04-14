@@ -2,6 +2,7 @@ package platypus // import "go.jona.me/platypus"
 
 import (
 	"bufio"
+	"crypto/tls"
 	"encoding/xml"
 	"errors"
 	"fmt"
@@ -12,12 +13,14 @@ import (
 )
 
 type Platypus struct {
-	host      string
-	addr      *net.TCPAddr
-	username  string
-	password  string
-	logintype string
-	Debug     bool
+	host        string
+	addr        *net.TCPAddr
+	username    string
+	password    string
+	logintype   string
+	ssl         bool
+	sslinsecure bool
+	Debug       bool
 }
 
 // New creates a new connection to the Platypus WOW API
@@ -27,6 +30,26 @@ func New(host string, user string, pass string) (Platypus, error) {
 		username:  user,
 		password:  pass,
 		logintype: "staff",
+	}
+
+	addr, err := net.ResolveTCPAddr("tcp", host)
+	if err != nil {
+		return p, errors.New(ERR_BAD_HOST)
+	}
+	p.addr = addr
+
+	return p, nil
+}
+
+// NewSSL creates a new connection to the Platypus WOW API using SSL
+func NewSSL(host string, user string, pass string, insecure bool) (Platypus, error) {
+	p := Platypus{
+		host:        host,
+		username:    user,
+		password:    pass,
+		logintype:   "staff",
+		ssl:         true,
+		sslinsecure: insecure,
 	}
 
 	addr, err := net.ResolveTCPAddr("tcp", host)
@@ -48,6 +71,10 @@ func (p Platypus) newDataBlock() DataBlock {
 	}
 
 	return db
+}
+
+func (p Platypus) getConn() {
+
 }
 
 // Exec calls the WOW API method named in action with a parameter struct.
@@ -81,12 +108,19 @@ func (p Platypus) Exec(action string, params interface{}) (DataBlock, error) {
 		fmt.Fprintf(os.Stderr, "Request:\n%s\n", rawout)
 	}
 
-	// send request
-	conn, err := net.DialTCP("tcp", nil, p.addr)
+	var conn net.Conn
+	if p.ssl == true {
+		sslcfg := tls.Config{InsecureSkipVerify: p.sslinsecure}
+		conn, err = tls.Dial("tcp", p.addr.String(), &sslcfg)
+	} else {
+		conn, err = net.DialTCP("tcp", nil, p.addr)
+
+	}
 	if err != nil {
 		return reply, err
 	}
 
+	// send request
 	_, err = conn.Write(rawout)
 	if err != nil {
 		return reply, err
