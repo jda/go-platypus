@@ -78,13 +78,14 @@ func (p Platypus) getConn() {
 }
 
 // Exec calls the WOW API method named in action with a parameter struct.
-func (p Platypus) Exec(action string, params interface{}) (DataBlock, error) {
+func (p Platypus) Exec(action string, params interface{}, props interface{}) (DataBlock, error) {
 	reply := DataBlock{}
 
 	// prep request
 	db := p.newDataBlock()
 	db.Action = action
 	db.Parameters = params
+  db.Properties = props
 
 	b := Body{
 		Data: db,

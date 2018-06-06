@@ -20,7 +20,7 @@ func (p Platypus) Login(username string, password string) error {
 		Password:  password,
 	}
 
-	res, err := p.Exec("Login", params)
+	res, err := p.Exec("Login", params, nil)
 	if err != nil {
 		return err
 	}
