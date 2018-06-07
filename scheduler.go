@@ -19,7 +19,7 @@ func (p Platypus) LastRun() (time.Time, error) {
 		Query:    "SELECT TOP 1 eventlog_etid, eventlog_result, eventlog_msg, eventlog_date FROM eventlog ORDER BY eventlog_date DESC",
 	}
 
-	res, err := p.Exec("SQL", params)
+	res, err := p.Exec("SQL", params, nil)
 	if err != nil {
 		return lastRun, err
 	}

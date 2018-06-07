@@ -27,7 +27,7 @@ type DataBlock struct {
 	Username     string             `xml:"username"`
 	Password     string             `xml:"password"`
 	Logintype    string             `xml:"logintype"`
-	Properties   string             `xml:"properties"`
+	Properties   interface{}        `xml:"properties"`
 	Parameters   interface{}        `xml:"parameters"`
 	ResponseCode string             `xml:"response_code,omitempty"`
 	ResponseText string             `xml:"response_text,omitempty"`
