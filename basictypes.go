@@ -1,4 +1,4 @@
-package platypus // import "go.jona.me/platypus"
+package platypus
 
 import (
 	"encoding/xml"

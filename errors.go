@@ -1,4 +1,4 @@
-package platypus // import "go.jona.me/platypus"
+package platypus
 
 const ERR_BAD_HOST = "could not resolve hostname"
 const ERR_BAD_MARSHAL = "could not marshal data into XML"

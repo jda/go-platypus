@@ -1,4 +1,4 @@
-package platypus // import "go.jona.me/platypus"
+package platypus
 
 import (
 	"bufio"
@@ -85,7 +85,7 @@ func (p Platypus) Exec(action string, params interface{}, props interface{}) (Da
 	db := p.newDataBlock()
 	db.Action = action
 	db.Parameters = params
-  db.Properties = props
+	db.Properties = props
 
 	b := Body{
 		Data: db,
